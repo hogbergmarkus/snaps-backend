@@ -1,8 +1,4 @@
 {
-   "python.linting.pylintEnabled": false,
-   "python.linting.enabled": true,
-   "python.linting.pycodestyleEnabled": true,
-   "python.linting.flake8Enabled": false,
    "python.terminal.activateEnvironment": false,
    "python.formatting.autopep8Path": "/home/gitpod/.pyenv/shims/autopep8",
    "python.linting.flake8Path": "/home/gitpod/.pyenv/shims/flake8",
@@ -21,7 +17,12 @@
       "**/CVS": true
    },
    "files.autoSave": "off",
-   "workbench.colorTheme": "Visual Studio Dark",
+   "workbench.colorTheme": "Default High Contrast",
    "terminal.integrated.gpuAcceleration": "canvas",
-   "editor.defaultFormatter": "HookyQR.beautify"
+   "editor.defaultFormatter": "HookyQR.beautify",
+   "cSpell.words": [
+      "cloudinary",
+      "jiag",
+      "zwtcct"
+   ]
 }
