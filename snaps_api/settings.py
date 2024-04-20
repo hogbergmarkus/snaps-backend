@@ -35,7 +35,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu110.gitpod.io',
+]
 
 
 # Application definition
@@ -112,6 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CSRF_TRUSTED_ORIGINS = ['https://8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu110.gitpod.io']
 
 
 # Internationalization
