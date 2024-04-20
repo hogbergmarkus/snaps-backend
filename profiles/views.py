@@ -4,6 +4,7 @@ from rest_framework import status
 from django.http import Http404
 from .models import Profile
 from .serializers import ProfileSerializer
+from snaps_api.permissions import IsOwnerOrReadOnly
 
 
 class ProfileList(APIView):
@@ -21,11 +22,14 @@ class ProfileDetail(APIView):
     Returns a single profile.
     Get profile or return 404 if not found.
     The put method allows you to update a profile.
+    IsOwnerOrReadOnly allows only the object owner to edit it.
     """
     serializer_class = ProfileSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     def get_object(self, pk):
         try:
             profile = Profile.objects.get(pk=pk)
+            self.check_object_permissions(self.request, profile)
             return profile
         except Profile.DoesNotExist:
             raise Http404
