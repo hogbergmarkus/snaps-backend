@@ -1,7 +1,9 @@
+from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from .models import Post
+from snaps_api.permissions import IsOwnerOrReadOnly
 from .serializers import PostSerializer
 
 
@@ -37,3 +39,27 @@ class PostList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
             )
+
+class PostDetail(APIView):
+    """
+    Returns a single post.
+    Get post or return 404 if not found.
+    IsOwnerOrReadOnly allows only the object owner to edit it.
+    """
+    serializer_class = PostSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def get_object(self, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            self.check_object_permissions(self.request, post)
+            return post
+        except Post.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        post = self.get_object(pk)
+        serializer = PostSerializer(
+            post, context={'request': request}
+        )
+        return Response(serializer.data)
