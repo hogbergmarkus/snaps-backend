@@ -10,11 +10,11 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     Has tagging functionality, and image size validation.
     """
 
-    post_owner = serializers.ReadOnlyField(source='post_owner.username')
+    owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    profile_id = serializers.ReadOnlyField(source='post_owner.profile.id')
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(
-        source='post_owner.profile.image.url'
+        source='owner.profile.image.url'
         )
     comments_count = serializers.ReadOnlyField()
     download_count = serializers.ReadOnlyField()
@@ -22,7 +22,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     def get_is_owner(self, obj):
         request = self.context['request']
-        return request.user == obj.post_owner
+        return request.user == obj.owner
 
     def validate_image(self, value):
         if value.size > 2 * 1024 * 1024:
@@ -43,7 +43,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         model = Post
         fields = [
             'id',
-            'post_owner',
+            'owner',
             'created_at',
             'updated_at',
             'title',
