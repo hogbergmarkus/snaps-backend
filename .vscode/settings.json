@@ -24,5 +24,8 @@
       "cloudinary",
       "jiag",
       "zwtcct"
+   ],
+   "cSpell.ignoreWords": [
+      "taggit"
    ]
 }
