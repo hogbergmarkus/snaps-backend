@@ -30,7 +30,7 @@ class PostList(APIView):
             context={'request': request}
             )
         if serializer.is_valid():
-            serializer.save(post_owner=request.user)
+            serializer.save(owner=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -39,6 +39,7 @@ class PostList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
             )
+
 
 class PostDetail(APIView):
     """
@@ -63,3 +64,16 @@ class PostDetail(APIView):
             post, context={'request': request}
         )
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        post = self.get_object(pk)
+        serializer = PostSerializer(
+            post, data=request.data, context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
