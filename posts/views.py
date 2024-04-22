@@ -46,6 +46,8 @@ class PostDetail(APIView):
     Returns a single post.
     Get post or return 404 if not found.
     IsOwnerOrReadOnly allows only the object owner to edit it.
+    The put method allows you to update a post.
+    The delete method allows you to delete a post.
     """
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
@@ -77,3 +79,8 @@ class PostDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    def delete(self, request, pk):
+        post = self.get_object(pk)
+        post.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
