@@ -3,6 +3,11 @@ from .models import Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the comment model.
+    is_owner, profile_id and profile_image are added
+    when returning a list of Comment instances.
+    """
 
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -26,3 +31,11 @@ class CommentSerializer(serializers.ModelSerializer):
             'profile_id',
             'profile_image',
         ]
+
+
+class CommentDetailSerializer(CommentSerializer):
+    """
+    Makes sure that the comment is associated with the correct post
+    when being edited.
+    """
+    post = serializers.ReadOnlyField(source='post.id')
