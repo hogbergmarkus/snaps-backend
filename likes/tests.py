@@ -11,6 +11,8 @@ class LikeListViewTests(APITestCase):
     Tests for the Like list view.
     List likes, create a like on a post or comment.
     Like multiple comments on the same post.
+    Like a post and multiple comments.
+    Like multiple comments without liking the post.
     Logged out user cannot create a like.
     """
 
@@ -47,3 +49,29 @@ class LikeListViewTests(APITestCase):
         comment = Comment.objects.get(content='this is a comment')
         response = self.client.post('/likes/', {'comment': comment.id})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_logged_in_user_can_like_post_and_comments(self):
+        self.client.login(username='adam', password='pass')
+        post = Post.objects.get(title='this is a title')
+        comment_one = Comment.objects.get(content='this is a comment')
+        comment_two = Comment.objects.get(content='this is another comment')
+        response = self.client.post('/likes/', {'post': post.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.post('/likes/', {'comment': comment_one.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.post('/likes/', {'comment': comment_two.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_logged_in_user_can_like_many_comments_without_liking_post(self):
+        self.client.login(username='brian', password='pass')
+        comment_one = Comment.objects.get(content='this is a comment')
+        comment_two = Comment.objects.get(content='this is another comment')
+        response = self.client.post('/likes/', {'comment': comment_one.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.post('/likes/', {'comment': comment_two.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_logged_out_user_cannot_like(self):
+        post = Post.objects.get(title='this is a title')
+        response = self.client.post('/likes/', {'post': post.id})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
