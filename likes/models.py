@@ -19,6 +19,8 @@ class Like(models.Model):
     comment = models.ForeignKey(
         Comment,
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
         related_name='likes',
         )
     created_at = models.DateTimeField(auto_now_add=True)
