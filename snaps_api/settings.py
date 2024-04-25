@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'posts',
     'comments',
     'likes',
+    'albums'
 ]
 
 TAGGIT_CASE_INSENSITIVE = True
