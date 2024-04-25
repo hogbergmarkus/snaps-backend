@@ -18,3 +18,16 @@ class AlbumList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View a single album if you own it.
+    Update or delete it if you own it.
+    """
+    serializer_class = AlbumSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Album.objects.filter(owner=user)
