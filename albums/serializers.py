@@ -20,6 +20,8 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'owner',
+            'is_owner',
+            'profile_id',
             'title',
             'posts',
             'created_at',
