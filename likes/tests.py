@@ -14,6 +14,7 @@ class LikeListViewTests(APITestCase):
     Like a post and multiple comments.
     Like multiple comments without liking the post.
     Logged out user cannot create a like.
+    User can not like the same thing multiple times.
     """
 
     def setUp(self):
@@ -75,6 +76,14 @@ class LikeListViewTests(APITestCase):
         post = Post.objects.get(title='this is a title')
         response = self.client.post('/likes/', {'post': post.id})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_cannot_like_same_thing_multiple_times(self):
+        self.client.login(username='adam', password='pass')
+        post = Post.objects.get(title='this is a title')
+        response = self.client.post('/likes/', {'post': post.id})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.post('/likes/', {'post': post.id})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
 class LikeDetailViewTests(APITestCase):
