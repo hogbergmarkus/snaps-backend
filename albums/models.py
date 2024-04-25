@@ -13,7 +13,7 @@ class Album(models.Model):
         related_name='albums',
         )
     title = models.CharField(max_length=255, blank=False, default='New Album')
-    posts = models.ManyToManyField(Post, related_name='albums')
+    posts = models.ManyToManyField(Post, related_name='albums', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
