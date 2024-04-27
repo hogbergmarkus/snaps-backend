@@ -1,22 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics, status
 from django.http import Http404
 from .models import Profile
 from .serializers import ProfileSerializer
 from snaps_api.permissions import IsOwnerOrReadOnly
 
 
-class ProfileList(APIView):
+class ProfileList(generics.ListAPIView):
     """
     Returns a list of all profiles.
+    Creation of profiles is handled by django signals,
+    so every time a user signs up, a profile is created.
     """
-    def get(self, request):
-        profiles = Profile.objects.all()
-        serializer = ProfileSerializer(
-            profiles, many=True, context={'request': request}
-            )
-        return Response(serializer.data)
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
 
 
 class ProfileDetail(APIView):
