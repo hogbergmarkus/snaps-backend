@@ -1,10 +1,7 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import generics, status
-from django.http import Http404
+from rest_framework import generics
+from snaps_api.permissions import IsOwnerOrReadOnly
 from .models import Profile
 from .serializers import ProfileSerializer
-from snaps_api.permissions import IsOwnerOrReadOnly
 
 
 class ProfileList(generics.ListAPIView):
@@ -17,40 +14,10 @@ class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
 
 
-class ProfileDetail(APIView):
+class ProfileDetail(generics.RetrieveUpdateAPIView):
     """
-    Returns a single profile.
-    Get profile or return 404 if not found.
-    The put method allows you to update a profile.
-    IsOwnerOrReadOnly allows only the object owner to edit it.
+    Retrieves and updates a single profile.
     """
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
-
-    def get_object(self, pk):
-        try:
-            profile = Profile.objects.get(pk=pk)
-            self.check_object_permissions(self.request, profile)
-            return profile
-        except Profile.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):
-        profile = self.get_object(pk)
-        serializer = ProfileSerializer(
-            profile, context={'request': request}
-            )
-        return Response(serializer.data)
-
-    def put(self, request, pk):
-        profile = self.get_object(pk)
-        serializer = ProfileSerializer(
-            profile, data=request.data, context={'request': request}
-            )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-            )
+    queryset = Profile.objects.all()
