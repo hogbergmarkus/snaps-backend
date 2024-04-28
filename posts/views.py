@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from .models import Post
 from .serializers import PostSerializer
 from snaps_api.permissions import IsOwnerOrReadOnly
@@ -12,6 +12,14 @@ class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends = [
+        filters.SearchFilter
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'tags__name',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
