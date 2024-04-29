@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 from .models import Post
+from likes.models import Like
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -19,6 +20,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     comments_count = serializers.ReadOnlyField()
     download_count = serializers.ReadOnlyField()
     tags = TagListSerializerField()
+    like_id = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -39,6 +41,21 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             )
         return value
 
+    def get_like_id(self, obj):
+        """
+        Gets the like id if the user has liked the post.
+        If user is not authenticated, or has not liked the post,
+        return None.
+        """
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(
+                owner=user,
+                post=obj
+            ).first()
+            return like.id if like else None
+        return None
+
     class Meta:
         model = Post
         fields = [
@@ -55,4 +72,5 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             'profile_id',
             'profile_image',
             'comments_count',
+            'like_id',
         ]
