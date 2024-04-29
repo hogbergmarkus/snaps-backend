@@ -2,6 +2,7 @@ from rest_framework import serializers
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 from .models import Post
 from likes.models import Like
+from comments.models import Comment
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -17,7 +18,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     profile_image = serializers.ReadOnlyField(
         source='owner.profile.image.url'
         )
-    comments_count = serializers.ReadOnlyField()
+    comments_count = serializers.SerializerMethodField()
     download_count = serializers.ReadOnlyField()
     tags = TagListSerializerField()
     like_id = serializers.SerializerMethodField()
@@ -64,6 +65,14 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         through related_name="likes".
         """
         return obj.likes.count()
+
+    def get_comments_count(self, obj):
+        """
+        Returns the number of comments for the post.
+        "comments" is referencing the Comment model, connected to the Post model,
+        through related_name="comments".
+        """
+        return obj.comments.count()
 
     class Meta:
         model = Post
