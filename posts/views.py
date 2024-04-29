@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from .models import Post
 from .serializers import PostSerializer
@@ -8,8 +9,12 @@ class PostList(generics.ListCreateAPIView):
     """
     Returns a list of all posts.
     A post can be created by an authenticated user.
+    In the queryset, annotate the number of likes for each post,
+    related to Post through related_name="likes".
     """
-    queryset = Post.objects.all()
+    queryset = Post.objects.annotate(
+        likes_count=Count('likes'),
+    )
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
