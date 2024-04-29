@@ -15,6 +15,7 @@ class CommentSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
     like_id = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -35,6 +36,14 @@ class CommentSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
 
+    def get_likes_count(self, obj):
+        """
+        Returns the number of likes for the comment.
+        "likes" is referencing the Like model, connected to the Comment model,
+        through related_name="likes".
+        """
+        return obj.likes.count()
+
     class Meta:
         model = Comment
         fields = [
@@ -48,6 +57,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'profile_id',
             'profile_image',
             'like_id',
+            'likes_count',
         ]
 
 
