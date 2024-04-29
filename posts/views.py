@@ -14,6 +14,7 @@ class PostList(generics.ListCreateAPIView):
     """
     queryset = Post.objects.annotate(
         likes_count=Count('likes'),
+        comments_count=Count('comments'),
     )
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
