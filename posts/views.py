@@ -19,12 +19,18 @@ class PostList(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [
-        filters.SearchFilter
+        filters.SearchFilter,
+        filters.OrderingFilter,
     ]
     search_fields = [
         'owner__username',
         'title',
         'tags__name',
+    ]
+    ordering_fields = [
+        'likes_count',
+        'comments_count',
+        'created_at',
     ]
 
     def perform_create(self, serializer):
