@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Comment
+from likes.models import Like
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -13,10 +14,26 @@ class CommentSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    like_id = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_like_id(self, obj):
+        """
+        Gets the like id if the user has liked the comment.
+        If user is not authenticated, or has not liked the comment,
+        return None.
+        """
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(
+                owner=user,
+                comment=obj
+            ).first()
+            return like.id if like else None
+        return None
 
     class Meta:
         model = Comment
@@ -30,6 +47,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'is_owner',
             'profile_id',
             'profile_image',
+            'like_id',
         ]
 
 
