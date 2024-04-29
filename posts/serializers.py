@@ -21,6 +21,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     download_count = serializers.ReadOnlyField()
     tags = TagListSerializerField()
     like_id = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -56,6 +57,14 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             return like.id if like else None
         return None
 
+    def get_likes_count(self, obj):
+        """
+        Returns the number of likes for the post.
+        "likes" is referencing the Like model, connected to the Post model,
+        through related_name="likes".
+        """
+        return obj.likes.count()
+
     class Meta:
         model = Post
         fields = [
@@ -73,4 +82,5 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             'profile_image',
             'comments_count',
             'like_id',
+            'likes_count',
         ]
