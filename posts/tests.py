@@ -8,6 +8,7 @@ class PostListViewTests(APITestCase):
     """
     Tests for the Post list view.
     List posts, create a post, logged out user cannot create a post.
+    Filter posts by owner, title or tags.
     """
     def setUp(self):
         User.objects.create_user(username='adam', password='pass')
@@ -32,6 +33,47 @@ class PostListViewTests(APITestCase):
             '/posts/', {'title': 'this is a title', 'tags': 'tag1, tag2'}
             )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_search_post_by_username(self):
+        Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Python',
+            )
+        Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Programming',
+            )
+        response = self.client.get('/posts/?search=adam')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+
+    def test_user_can_search_post_by_title(self):
+        Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Python',
+            )
+        Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Programming',
+            )
+        response = self.client.get('/posts/?search=Python')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
+
+    def test_user_can_search_post_by_tags(self):
+        post_one = Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Python Programming',
+            )
+        post_two = Post.objects.create(
+            owner=User.objects.get(username='adam'),
+            title='Web Development',
+            )
+        post_one.tags.add('test1', 'test2')
+        post_two.tags.add('test3', 'test4')
+        response = self.client.get('/posts/?search=test3')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
 
 class PostDetailViewTests(APITestCase):
