@@ -63,7 +63,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     '8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu110.gitpod.io',
-    'snaps.herokuapp.com',
+    'https://snaps-2a8aec1abfbd.herokuapp.com',
 ]
 
 
