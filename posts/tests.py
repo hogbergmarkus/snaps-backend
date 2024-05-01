@@ -126,3 +126,31 @@ class PostDetailViewTests(APITestCase):
             )
         response = self.client.delete(f'/posts/{post.id}/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class IncrementDownloadCountTests(APITestCase):
+    """
+    Tests for the IncrementDownloadCount view.
+    Logged in user can download a post,
+    and the download count is incremented by 1.
+    Logged out user cannot download a post.
+    """
+    def setUp(self):
+        self.user = User.objects.create_user(username='adam', password='pass')
+        self.post = (
+            Post.objects.create(owner=self.user, title='This is a title')
+        )
+
+    def test_increment_download_count(self):
+        self.client.login(username='adam', password='pass')
+        initial_download_count = self.post.download_count
+        response = self.client.post(f'/posts/{self.post.id}/download/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.post.refresh_from_db()
+        self.assertEqual(
+            self.post.download_count, initial_download_count + 1
+            )
+
+    def test_logged_out_user_cannot_download_post(self):
+        response = self.client.post(f'/posts/{self.post.id}/download/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
