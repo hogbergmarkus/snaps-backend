@@ -17,3 +17,15 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Design](#design)
+  - [Entity Relational Diagram](#entity-relational-diagram)
+
+## Design
+
+### Entity Relational Diagram
+
+As a part of my design process, I charted my models on a spreadsheet.
+
+The result can be seen here:
+
+![Entity Relational Diagram](documentation/entity_relational_diagram/erd.png)
