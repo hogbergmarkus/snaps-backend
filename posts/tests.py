@@ -45,7 +45,7 @@ class PostListViewTests(APITestCase):
             )
         response = self.client.get('/posts/?search=adam')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(response.data['count'], 2)
 
     def test_user_can_search_post_by_title(self):
         Post.objects.create(
@@ -58,7 +58,7 @@ class PostListViewTests(APITestCase):
             )
         response = self.client.get('/posts/?search=Python')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data['count'], 1)
 
     def test_user_can_search_post_by_tags(self):
         post_one = Post.objects.create(
@@ -73,7 +73,7 @@ class PostListViewTests(APITestCase):
         post_two.tags.add('test3', 'test4')
         response = self.client.get('/posts/?search=test3')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data['count'], 1)
 
 
 class PostDetailViewTests(APITestCase):

@@ -42,7 +42,7 @@ class AlbumListViewTests(APITestCase):
         Album.objects.create(owner=self.brian, title='My Album')
         response = self.client.get('/albums/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, [])
+        self.assertEqual(response.data['count'], 0)
 
 
 class AlbumDetailViewTests(APITestCase):
