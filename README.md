@@ -13,3 +13,7 @@ Snaps is a photo-sharing website that allows users to upload photos to share wit
 Any photos uploaded to the website is also free to download for other users, thereby creating a sharing community.
 
 Users can sign up to take part in interactions such as, up- and downloading images, like, comment and save images to albums in their profile.
+
+## Table of Contents
+
+- [Introduction](#introduction)
