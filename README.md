@@ -22,6 +22,7 @@ Users can sign up to take part in interactions such as, up- and downloading imag
   - [API-endpoints](#api-endpoints)
 - [Testing](#testing)
   - [Unit Tests](#unit-tests)
+  - [Validation](#validation)
 
 ## Design
 
@@ -83,3 +84,7 @@ I have created some 50 automated tests for my views, all passing.
 - Tests for my Post views can be found here: [Posts view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/posts/tests.py)
 
 - Tests for my Profile views can be found here: [Profile view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/profiles/tests.py)
+
+### Validation
+
+All files I created/altered were run through the [PEP8 CI python linter](https://pep8ci.herokuapp.com/), with no errors or warnings to show.
