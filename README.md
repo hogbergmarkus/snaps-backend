@@ -23,6 +23,13 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 - [Testing](#testing)
   - [Unit Tests](#unit-tests)
   - [Validation](#validation)
+  - [Manual Testing](#manual-testing)
+    - [root_route](#root_route)
+    - [albums](#albums)
+    - [comments](#comments)
+    - [likes](#likes)
+    - [posts](#posts)
+    - [profiles](#profiles)
 
 ## Design
 
@@ -88,3 +95,83 @@ I have created some 50 automated tests for my views, all passing.
 ### Validation
 
 All files I created/altered were run through the [PEP8 CI python linter](https://pep8ci.herokuapp.com/), with no errors or warnings to show.
+
+### Manual Testing
+
+Each title under "Works" was tested manually and marked with an X for yes if it works, and no if it does not.
+
+#### root_route
+
+|Works                                              |YES |NO |
+|---------------------------------------------------|:---:|---|
+|The root_route url loads                           |X  |   |
+|Welcome message is displayed on landing page       |X  |   |
+
+#### albums
+
+|Works                                                   |YES |NO |
+|--------------------------------------------------------|:---:|---|
+|`albums/` is not accessible if not logged in            |X  |   |
+|`albums/<int:pk>/` is not accessible if not logged in   |X  |   |
+|`albums/` is accessible to user if logged in            |X  |   |
+|`albums/<int:pk>/` is accessible to user if logged in   |X  |   |
+|Logged in user can create an album and add posts to it  |X  |   |
+|Logged in user can view their albums                    |X  |   |
+|Logged in user can update an album                      |X  |   |
+|Logged in user can delete an album                      |X  |   |
+
+#### comments
+
+|Works                                                                |YES |NO |
+|---------------------------------------------------------------------|:---:|---|
+|`comments/` is accessible if not logged in as read only              |X  |   |
+|`comments/<int:pk>/` is accessible if not logged in as read only     |X  |   |
+|Can read, but not create comments if not logged in                   |X  |   |
+|If I am signed in, I can create a comment                            |X  |   |
+|Comments can not be edited if not logged in                          |X  |   |
+|Comments can not be deleted if not logged in                         |X  |   |
+|Comments can be edited by its owner                                  |X  |   |
+|Comments can be deleted by its owner                                 |X  |   |
+
+#### likes
+
+|Works                                                                |YES |NO |
+|---------------------------------------------------------------------|:---:|---|
+|`likes/` is accessible if not logged in as read only                 |X  |   |
+|`likes/<int:pk>/` is accessible if not logged in as read only        |X  |   |
+|I can see but not add likes if not logged in                         |X  |   |
+|If I am signed in, I can add a like to a post                        |X  |   |
+|If I am signed in, I can add a like to a comment                     |X  |   |
+|Likes can not be deleted if not logged in as the owner               |X  |   |
+|Likes can be deleted if logged in as its owner                       |X  |   |
+|I can not like the same thing twice                                  |X  |   |
+
+#### posts
+
+|Works                                                                    |YES |NO |
+|-------------------------------------------------------------------------|:---:|---|
+|`posts/` is accessible if not logged in as read only                     |X  |   |
+|`posts/<int:pk>/` is accessible if not logged in as read only            |X  |   |
+|`posts/<int:pk>/download/` is not accessible if not logged in            |X  |   |
+|I can see but not add posts if not logged in                             |X  |   |
+|If I am signed in, I can add a post                                      |X  |   |
+|Posts can not be edited if not logged in as the owner                    |X  |   |
+|Posts can not be deleted if not logged in as its owner                   |X  |   |
+|Posts can be edited by its owner                                         |X  |   |
+|Posts can be deleted by its owner                                        |X  |   |
+|I can increment download count by posting to `posts/<int:pk>/download/`  |X  |   |
+|comments_count increments by one when I add a comment to a post          |X  |   |
+|likes_count increments by one when I add a like to a post                |X  |   |
+|I can upload an image to a post                                          |X  |   |
+
+#### profiles
+
+|Works                                                                |YES |NO |
+|---------------------------------------------------------------------|:---:|---|
+|`profiles/` is accessible if not logged in as read only              |X  |   |
+|`profiles/<int:pk>/` is accessible if not logged in as read only     |X  |   |
+|`profiles/<int:pk>/` is accessible if not logged in as read only     |X  |   |
+|Upon registering, a new profile is created for the user              |X  |   |
+|As the owner of a profile, I can update it                           |X  |   |
+|I can add a profile image                                            |X  |   |
+|If I don't own the profile, I can only view it                       |X  |   |
