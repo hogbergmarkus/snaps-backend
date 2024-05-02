@@ -19,6 +19,7 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 - [Introduction](#introduction)
 - [Design](#design)
   - [Entity Relational Diagram](#entity-relational-diagram)
+  - [API-endpoints](#api-endpoints)
 
 ## Design
 
@@ -29,3 +30,9 @@ As a part of my design process, I charted my models on a spreadsheet.
 The result can be seen here:
 
 ![Entity Relational Diagram](documentation/entity_relational_diagram/erd.png)
+
+### API Endpoints
+
+These are the endpoints used by my API:
+
+![API-endpoints](documentation/images/api_endpoints.png)
