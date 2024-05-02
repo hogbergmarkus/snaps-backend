@@ -30,6 +30,7 @@ Users can sign up to take part in interactions such as, up- and downloading imag
     - [likes](#likes)
     - [posts](#posts)
     - [profiles](#profiles)
+- [Deployment](#deployment)
 
 ## Design
 
@@ -175,3 +176,77 @@ Each title under "Works" was tested manually and marked with an X for yes if it 
 |As the owner of a profile, I can update it                           |X  |   |
 |I can add a profile image                                            |X  |   |
 |If I don't own the profile, I can only view it                       |X  |   |
+
+## Deployment
+
+I started by setting up a database at [Elephant SQL](https://www.elephantsql.com/).
+
+On [Heroku](https://www.heroku.com/) I created my app, then on the settings page for the app, I added the following config vars:
+
+- DATABASE_URL with the value of my postgreSQL server url.
+- SECRET_KEY with a value I got from [Djecrety](https://djecrety.ir/).
+- DISABLE_COLLECTSTATIC with the value of 1.
+- CLOUDINARY_URL with a value of my cloudinary API environment variable.
+
+Back in my IDE, I installed dj_database_url and psycopg2, using the command:
+
+- pip3 install dj_database_url==0.5.0 psycopg2
+
+Then import dj_database_url into the setting.py file.
+
+In settings.py I updated the Database section to use my local db.sqlite3 server when I'm in development,
+
+and to use my postgreSQL server when in production.
+
+This is the code snipped to achieve that:
+
+```
+if 'DEV' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
+```
+
+I then added ```os.environ['DATABASE_URL'] = 'my-ElephantSQL-database-url'``` to my env.py file.
+
+In my env.py file I also have ```os.environ['DEV'] = '1'```, to be able to set conditional logic in my settings.py,
+
+so I can dynamically switch between development and production.
+
+Temporarily comment out the DEV variable in the env.py file, to let the IDE connect
+to the external database.
+
+In settings.py add a print statement here:
+
+```
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
+    print(connected to external database)
+```
+
+In the terminal, run:
+
+- python3 manage.py makemigrations --dry-run
+
+You should see: "connected to external database" in the terminal.
+
+Remove the print statement, and migrate the database:
+
+- python3 manage.py migrate
+
+Create a superuser:
+
+- python3 manage.py createsuperuser
+
+Head back over to [Elephant SQL](https://www.elephantsql.com/), and go to the database you just created.
+
+On the left side navigation, click "Browser", then select "Table queries", and from the list, click "auth_user".
