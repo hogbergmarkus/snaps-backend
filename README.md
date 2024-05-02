@@ -190,7 +190,7 @@ On [Heroku](https://www.heroku.com/) I created my app, then on the settings page
 
 Back in my IDE, I installed dj_database_url and psycopg2, using the command:
 
-- pip3 install dj_database_url==0.5.0 psycopg2
+- ```pip3 install dj_database_url==0.5.0 psycopg2```
 
 Then import dj_database_url into the setting.py file.
 
@@ -235,18 +235,115 @@ else:
 
 In the terminal, run:
 
-- python3 manage.py makemigrations --dry-run
+- ```python3 manage.py makemigrations --dry-run```
 
 You should see: "connected to external database" in the terminal.
 
 Remove the print statement, and migrate the database:
 
-- python3 manage.py migrate
+- ```python3 manage.py migrate```
 
 Create a superuser:
 
-- python3 manage.py createsuperuser
+- ```python3 manage.py createsuperuser```
 
 Head back over to [Elephant SQL](https://www.elephantsql.com/), and go to the database you just created.
 
 On the left side navigation, click "Browser", then select "Table queries", and from the list, click "auth_user".
+
+Finally click "Execute", and you should see your superuser.
+
+Now back in the IDE, I installed gunicorn and django-cors-headers using the command:
+
+- ```pip3 install gunicorn django-cors-headers```
+
+Gunicorn is needed for deploying to Heroku, and we need django-cors-headers
+
+since the frontend and backend will be hosted on different domains.
+
+Save the installed packaged to requirements.txt by running:
+
+- ```pip freeze --local > requirements.txt```
+
+Create a Procfile in the root directory, and add this inside:
+
+```
+release: python manage.py makemigrations && python manage.py migrate
+web: gunicorn <your-project-name>.wsgi
+```
+
+In settings.py I added: ```os.environ.get('ALLOWED_HOST')``` to ALLOWED_HOSTS,
+
+and then in env.py: ```os.environ['ALLOWED_HOST'] = '<my-gitpod-workspace-url>'```
+
+I did this after my first deployment, which didn't allow me to access my project,
+
+but now I had the deployed url, so in my app on Heroku I went back to settings,
+
+reveal config vars, and entered ALLOWED_HOST with a value of my deployed url.
+
+Back in the IDE, add ```'corsheaders'``` to INSTALLED_APPS.
+
+Add ```'corsheaders.middleware.CorsMiddleware',``` to the top of the MIDDLEWARE list in settings.py.
+
+Continuing in settings.py, we need to set some allowed origins for CORS,
+
+in order for network requests to not be blocked, note that this code is specific to the use of GitPod
+
+and might need to be configured differently for you.
+
+```
+if 'CLIENT_ORIGIN' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        os.environ.get('CLIENT_ORIGIN')
+    ]
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''),
+        re.IGNORECASE
+        ).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+```
+
+We also need to make sure we can send cookies cross-origin for authentication purposes.
+
+So add ```CORS_ALLOW_CREDENTIALS = True``` to settings.py.
+
+Since the frontend app and this API will be deployed to different urls,
+
+the JWT_AUTH_SAMESITE needs to be set to a value of None in settings.py, or cookies will be blocked:
+
+```
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_SECURE': True,
+    'JWT_AUTH_COOKIE': 'my-app-auth',
+    'JWT_AUTH_REFRESH_COOKIE': 'my-refresh-token',
+    'JWT_AUTH_SAMESITE': 'None',
+    'USER_DETAILS_SERIALIZER': 'snaps_api.serializers.CurrentUserSerializer'
+}
+```
+
+Double check that you replaced your SECRET_KEY with something similar to this:
+
+```SECRET_KEY = os.getenv('SECRET_KEY')```, and that you have set a new value for it
+
+in env.py or another file that you don't push anywhere near public eyes.
+
+I added this to my env.py: ```os.environ.setdefault("SECRET_KEY", "MyNewRandomValueHere")```
+
+I changed the DEBUG value in settings.py to: ```DEBUG = 'DEV' in os.environ```,
+
+this helps to not constantly have to switch DEBUG between True and False in development.
+
+Now I commented ```DEV``` back in, in env.py.
+
+Again, I made sure my requirements.txt was up to date, and then pushed to GitHub.
+
+On Heroku, open the deploy tab for the app, select "Connect to GitHub",
+
+search for the repository and click connect.
+
+Finally click "Deploy Branch". After it finished building my app opened and worked as expected.
