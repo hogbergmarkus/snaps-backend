@@ -31,6 +31,7 @@ Users can sign up to take part in interactions such as, up- and downloading imag
     - [posts](#posts)
     - [profiles](#profiles)
 - [Deployment](#deployment)
+  - [Cloning and Forking](#cloning-and-forking)
 
 ## Design
 
@@ -347,3 +348,25 @@ On Heroku, open the deploy tab for the app, select "Connect to GitHub",
 search for the repository and click connect.
 
 Finally click "Deploy Branch". After it finished building my app opened and worked as expected.
+
+### Cloning and Forking
+
+If you want to clone or fork this project, you can do it from my [GitHub repository](https://github.com/hogbergmarkus/snaps-backend)
+
+Setting up a virtual environment is recommended first.
+
+**Cloning** the project means you are creating a local copy of the project on your own machine.
+
+This enables you to make changes without affecting the original repository.
+
+**Forking** it means you are creating a copy of the project on your own GitHub account,
+
+which gives you the ability to propose changes to the original project,
+
+or just developing your own modified version of it.
+
+Then you will need to reinstall the dependencies in the requirements.txt file using this command:
+
+- ```pip install -r requirements.txt```
+
+You will also need to set up your own environment variables
