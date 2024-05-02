@@ -20,6 +20,8 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 - [Design](#design)
   - [Entity Relational Diagram](#entity-relational-diagram)
   - [API-endpoints](#api-endpoints)
+- [Testing](#testing)
+  - [Unit Tests](#unit-tests)
 
 ## Design
 
@@ -65,3 +67,19 @@ The result can be seen here:
 These are the endpoints used by my API:
 
 ![API-endpoints](documentation/images/api_endpoints.png)
+
+## Testing
+
+### Unit Tests
+
+I have created some 50 automated tests for my views, all passing.
+
+- Tests for my Album views can be found here: [Album view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/albums/tests.py)
+
+- Tests for my Comment views can be found here: [Comments view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/comments/tests.py)
+
+- Tests for my Like views can be found here: [Likes view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/likes/tests.py)
+
+- Tests for my Post views can be found here: [Posts view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/posts/tests.py)
+
+- Tests for my Profile views can be found here: [Profile view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/profiles/tests.py)
