@@ -49,6 +49,8 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 - [Fixed Bugs](#fixed-bugs)
   - [Bug Fix 1](#bug-fix-1)
   - [Bug Fix 2](#bug-fix-2)
+- [Credits](#credits)
+  - [Moments](#moments)
 
 ## Design
 
@@ -517,3 +519,19 @@ I googled the warning and found an answer on [GitHubGist](https://gist.github.co
 I then added ordering to my querysets in my views where it was an issue and the warning went away.
 
 ![Solution bug 2](documentation/images/solution_bug_2.png)
+
+## Credits
+
+### Moments
+
+While this project was inspired by [Moments](https://github.com/Code-Institute-Solutions/moments/tree/304244f540308ff4dd3c961352f55a633a4b3bed)
+and its backend [drf_api](https://github.com/Code-Institute-Solutions/drf-api/tree/ed54af9450e64d71bc4ecf16af0c35d00829a106),
+and there are many similarities in the code,
+
+I have created my own Post, Like and Album models to suit the needs of my project,
+
+and therefore there are other differences in the codebase as well.
+
+I chose to use the same default images for profiles and posts if no image is uploaded by the user,
+
+since they were already in place in my Cloudinary storage, and fulfilled my needs.
