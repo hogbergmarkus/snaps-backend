@@ -46,6 +46,9 @@ Users can sign up to take part in interactions such as, up- and downloading imag
 - [Bugs](#bugs)
   - [Bug 1](#bug-1)
   - [Bug 2](#bug-2)
+- [Fixed Bugs](#fixed-bugs)
+  - [Bug Fix 1](#bug-fix-1)
+  - [Bug Fix 2](#bug-fix-2)
 
 ## Design
 
@@ -486,3 +489,31 @@ Upon resolving Bug 1, my unit tests were now passing again.
 However I was still getting a warning that pagination might cause issues, message seen here:
 
 ![Pagination warning](documentation/images/pagination_warning.png)
+
+## Fixed Bugs
+
+### Bug Fix 1
+
+After doing some research I found that I had most likely made mistakes in my assertions.
+
+I found my answer here on [stackoverflow](https://stackoverflow.com/questions/30914557/how-to-test-response-contains-a-particular-key-and-value)
+
+Here is what my test looked like when it failed:
+
+![Failing test](documentation/images/assertion_wrong.png)
+
+After changing the last assertion to: ```self.assertEqual(response.data['count'], 1)```, my tests passed again.
+
+### Bug Fix 2
+
+This bug and bug fix can be seen as a part of bug 1.
+
+Even after I changed the assertions in my tests, and the tests passed, I was getting a warning, as seen in [Bug 2](#bug-2).
+
+I googled the warning and found an answer on [GitHubGist](https://gist.github.com/hdknr/46723c4fa2639b9bc78fe52cdad903b0).
+
+![Pagination warning solution](documentation/images/pagination_solution.png)
+
+I then added ordering to my querysets in my views where it was an issue and the warning went away.
+
+![Solution bug 2](documentation/images/solution_bug_2.png)
