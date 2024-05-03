@@ -43,6 +43,9 @@ Users can sign up to take part in interactions such as, up- and downloading imag
   - [Database Used](#database-used)
   - [Image Storage](#image-storage)
   - [Deployment Service](#deployment-service)
+- [Bugs](#bugs)
+  - [Bug 1](#bug-1)
+  - [Bug 2](#bug-2)
 
 ## Design
 
@@ -463,3 +466,23 @@ I used a PostgreSQL database for this project, at [Elephant SQL](https://www.ele
 ### Deployment Service
 
 [Heroku](https://www.heroku.com/) was used to deploy the project.
+
+## Bugs
+
+### Bug 1
+
+After I added pagination to my project, some of my unit tests failed,
+
+more specifically tests that related to search features, such as searching for posts.
+
+The fail message can be seen here:
+
+![Failed unit tests](documentation/images/pagination_fail_tests.png)
+
+### Bug 2
+
+Upon resolving Bug 1, my unit tests were now passing again.
+
+However I was still getting a warning that pagination might cause issues, message seen here:
+
+![Pagination warning](documentation/images/pagination_warning.png)
