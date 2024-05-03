@@ -32,6 +32,17 @@ Users can sign up to take part in interactions such as, up- and downloading imag
     - [profiles](#profiles)
 - [Deployment](#deployment)
   - [Cloning and Forking](#cloning-and-forking)
+- [Technologies Used](#technologies-used)
+  - [Languages](#languages)
+  - [Frameworks](#frameworks)
+  - [Libraries](#libraries)
+    - [Authentication](#authentication)
+    - [Database](#database)
+    - [Image Handling](#image-handling)
+    - [Utilities](#utilities)
+  - [Database Used](#database-used)
+  - [Image Storage](#image-storage)
+  - [Deployment Service](#deployment-service)
 
 ## Design
 
@@ -370,3 +381,85 @@ Then you will need to reinstall the dependencies in the requirements.txt file us
 - ```pip install -r requirements.txt```
 
 You will also need to set up your own environment variables
+
+## Technologies Used
+
+### Languages
+
+This api was written using Python.
+
+### Frameworks
+
+- Django
+  
+  The core framework, providing the foundation for this api.
+
+- django-rest-framework
+  
+  A framework building on top of Django, used for creating RESTful APIs.
+
+### Libraries
+
+#### Authentication
+
+- dj-rest-auth
+  
+  Lets django-rest-framework provide authentication endpoints in an easy way.
+
+- django-allauth
+  
+  Comprehensive authentication app for Django.
+
+- djangorestframework-simplejwt
+  
+  JSON Web Token based authentication, which will be used for authentication from the frontend.
+
+#### Database
+
+- dj-database-url
+  
+  Used to help parse urls for easy configuration in Django.
+
+- psycopg2
+  
+  A PostgreSQL adapter for Python.
+
+#### Image Handling
+
+- cloudinary
+  
+  Used to interact with Cloudinary, cloud based image storage.
+
+- django-cloudinary-storage
+  
+  Integrates Cloudinary to be able to use it as storage for media in Django.
+
+- Pillow
+  
+  Used for image processing.
+
+#### Utilities
+
+- gunicorn
+  
+  A WSGI server used in production, needed for deployment.
+
+- django-cors-headers
+  
+  Adds Cross-Origin Resource Sharing headers. Used to allow requests to a Django application from other origins.
+
+- django-taggit
+  
+  Used for adding tags to Posts in this project, makes it easier for users to search content.
+
+### Database Used
+
+I used a PostgreSQL database for this project, at [Elephant SQL](https://www.elephantsql.com/).
+
+### Image Storage
+
+[Cloudinary](https://cloudinary.com/) was used for image storage.
+
+### Deployment Service
+
+[Heroku](https://www.heroku.com/) was used to deploy the project.
