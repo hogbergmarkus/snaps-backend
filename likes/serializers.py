@@ -12,8 +12,8 @@ class LikeSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """
         Creates a Like instance.
-        Checks if the user already liked the post.
-        Throws an error if the user already liked the post.
+        Checks if the user already liked the post or comment.
+        Throws an error if the user already liked that instance.
         """
         owner = self.context['request'].user
         post = validated_data.get('post')
