@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from pathlib import Path
 from taggit.serializers import TagListSerializerField, TaggitSerializer
 from .models import Post
 from likes.models import Like
@@ -28,9 +29,16 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         return request.user == obj.owner
 
     def validate_image(self, value):
-        if value.size > 2 * 1024 * 1024:
+        path = Path(value.name)
+        file_extension = path.suffix.lower()
+        valid_extensions = ['.jpg', '.jpeg', '.png']
+        if file_extension not in valid_extensions:
             raise serializers.ValidationError(
-                'Image size larger than 2MB!'
+                'Image must be jpg, jpeg or png!'
+            )
+        if value.size > 4 * 1024 * 1024:
+            raise serializers.ValidationError(
+                'Image size larger than 4MB!'
             )
         if value.image.height > 4096:
             raise serializers.ValidationError(
@@ -68,7 +76,8 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     def get_comments_count(self, obj):
         """
         Returns the number of comments for the post.
-        "comments" is referencing the Comment model, connected to the Post model,
+        "comments" is referencing the Comment model,
+        connected to the Post model,
         through related_name="comments".
         """
         return obj.comments.count()
