@@ -183,7 +183,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu110.gitpod.io'
+    'https://8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu111.gitpod.io'
     ]
 
 
