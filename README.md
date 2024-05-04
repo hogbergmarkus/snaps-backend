@@ -184,6 +184,8 @@ Each title under "Works" was tested manually and marked with an X for yes if it 
 |comments_count increments by one when I add a comment to a post          |X  |   |
 |likes_count increments by one when I add a like to a post                |X  |   |
 |I can upload an image to a post                                          |X  |   |
+|File extension must be jpg, jpeg or png when uploading an image          |X  |   |
+|If file extension is not jpg, jpeg or png an error informs the user      |X  |   |
 
 #### profiles
 
