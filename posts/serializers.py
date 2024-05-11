@@ -36,9 +36,9 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Image must be jpg, jpeg or png!'
             )
-        if value.size > 4 * 1024 * 1024:
+        if value.size > 5 * 1024 * 1024:
             raise serializers.ValidationError(
-                'Image size larger than 4MB!'
+                'Image size larger than 5MB!'
             )
         if value.image.height > 4096:
             raise serializers.ValidationError(
