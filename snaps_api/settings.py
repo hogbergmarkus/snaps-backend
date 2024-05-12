@@ -80,6 +80,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'taggit',
     'rest_framework',
+    'django_filters',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'django.contrib.sites',

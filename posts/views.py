@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Post
 from .serializers import PostSerializer
 from snaps_api.permissions import IsOwnerOrReadOnly
@@ -24,6 +25,11 @@ class PostList(generics.ListCreateAPIView):
     filter_backends = [
         filters.SearchFilter,
         filters.OrderingFilter,
+        DjangoFilterBackend,
+    ]
+    filterset_fields = [
+        'likes__owner__profile',
+        'owner__profile',
     ]
     search_fields = [
         'owner__username',
