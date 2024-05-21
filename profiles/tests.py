@@ -58,3 +58,21 @@ class ProfileDetailViewTests(APITestCase):
             {'username': 'mada'}
             )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_owner_can_delete_profile(self):
+        self.client.login(username='adam', password='pass')
+        response = self.client.delete(f'/profiles/{self.adam_profile.id}/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        response = self.client.get(f'/profiles/{self.adam_profile.id}/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_logged_out_user_cannot_delete_profile(self):
+        response = self.client.delete(f'/profiles/{self.adam_profile.id}/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_logged_in_user_cannot_delete_other_users_profile(self):
+        self.client.login(username='brian', password='pass')
+        response = self.client.delete(f'/profiles/{self.adam_profile.id}/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        response = self.client.get(f'/profiles/{self.adam_profile.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
