@@ -14,9 +14,9 @@ class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
 
 
-class ProfileDetail(generics.RetrieveUpdateAPIView):
+class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     """
-    Retrieves and updates a single profile.
+    Retrieves, updates or deletes a single profile.
     """
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
