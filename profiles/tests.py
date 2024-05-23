@@ -58,3 +58,18 @@ class ProfileDetailViewTests(APITestCase):
             {'username': 'mada'}
             )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_profile_created_with_correct_username(self):
+        self.assertEqual(self.adam.username, self.adam_profile.username)
+
+    def test_user_username_updates_when_profile_username_updates(self):
+        self.client.login(username='adam', password='pass')
+        response = self.client.put(
+            f'/profiles/{self.adam_profile.id}/',
+            {'username': 'new_adam'}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.adam.refresh_from_db()
+        self.adam_profile.refresh_from_db()
+        self.assertEqual(self.adam.username, 'new_adam')
+        self.assertEqual(self.adam_profile.username, 'new_adam')
