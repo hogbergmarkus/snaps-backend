@@ -27,7 +27,15 @@ class Profile(models.Model):
 
 def create_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(owner=instance)
+        Profile.objects.create(owner=instance, username=instance.username)
+
+
+def update_user_username(sender, instance, **kwargs):
+    user = instance.owner
+    if user.username != instance.username:
+        user.username = instance.username
+        user.save()
 
 
 post_save.connect(create_profile, sender=User)
+post_save.connect(update_user_username, sender=Profile)
