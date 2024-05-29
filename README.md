@@ -166,7 +166,8 @@ Each title under "Works" was tested manually and marked with an X for yes if it 
 |---------------------------------------------------------------------|:---:|---|
 |`likes/` is accessible if not logged in as read only                 |X  |   |
 |`likes/<int:pk>/` is accessible if not logged in as read only        |X  |   |
-|I can see but not add likes if not logged in                         |X  |   |
+|I can see likes when not logged in                                   |X  |   |
+|I can not add likes if not logged in                                 |X  |   |
 |If I am signed in, I can add a like to a post                        |X  |   |
 |If I am signed in, I can add a like to a comment                     |X  |   |
 |Likes can not be deleted if not logged in as the owner               |X  |   |
