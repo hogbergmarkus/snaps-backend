@@ -6,6 +6,12 @@
 
 This is my RESTful API, developed for my frontend React project, Snaps.
 
+The API is deployed here: [Snaps back-end](https://snaps-2a8aec1abfbd.herokuapp.com/)
+
+The font-end for this API can be found here on GitHub [Snaps front-end](https://github.com/hogbergmarkus/snaps),
+
+And the deployed front-end is here: [Snaps](https://snaps-frontend-871b3764ee9c.herokuapp.com/)
+
 It contains all the logic that allows users on the frontend to perform CRUD operations.
 
 Snaps is a photo-sharing website that allows users to upload photos to share with others.
