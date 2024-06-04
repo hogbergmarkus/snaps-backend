@@ -93,15 +93,25 @@ The Moments project does not carry this feature at all.
 
 It will allow users to save posts to albums that they can create on their profile page.
 
+- **My Report model**
+
+This is another feature that the moments project does not have.
+
+Users can report a post if they find the content inappropriate for any reason.
+
 The result can be seen here:
 
 ![Entity Relational Diagram](documentation/entity_relational_diagram/erd.png)
+
+![Report model](documentation/images/report_model.png)
 
 ### API Endpoints
 
 These are the endpoints used by my API:
 
 ![API-endpoints](documentation/images/api_endpoints.png)
+
+![Reports endpoint](documentation/images/reports_endpoint.png)
 
 ## Testing
 
