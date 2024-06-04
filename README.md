@@ -36,6 +36,7 @@ Users can sign up to take part in interactions such as, up- and downloading imag
     - [likes](#likes)
     - [posts](#posts)
     - [profiles](#profiles)
+    - [reports](#reports)
 - [Deployment](#deployment)
   - [Cloning and Forking](#cloning-and-forking)
 - [Technologies Used](#technologies-used)
@@ -129,6 +130,8 @@ I have created some 50 automated tests for my views, all passing.
 
 - Tests for my Profile views can be found here: [Profile view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/profiles/tests.py)
 
+- Tests for my Report views can be found here: [Report view tests](https://github.com/hogbergmarkus/snaps-backend/blob/main/reports/tests.py)
+
 ### Validation
 
 All files I created/altered were run through the [PEP8 CI python linter](https://pep8ci.herokuapp.com/), with no errors or warnings to show.
@@ -215,6 +218,15 @@ Each title under "Works" was tested manually and marked with an X for yes if it 
 |As the owner of a profile, I can update it                           |X  |   |
 |I can add a profile image                                            |X  |   |
 |If I don't own the profile, I can only view it                       |X  |   |
+
+#### reports
+
+|Works                                                                |YES |NO |
+|---------------------------------------------------------------------|:---:|---|
+|`reports/` is not accessible if not logged in                        |X  |   |
+|`reports/` is accessible when logged in                              |X  |   |
+|When logged in, i can report a post                                  |X  |   |
+|I can see reports made by users in the admin panel                   |X  |   |
 
 ## Deployment
 
