@@ -6,7 +6,6 @@ class ReportSerializer(serializers.ModelSerializer):
     """
     Serializer for the Report model.
     """
-    post = serializers.ReadOnlyField(source='post.id')
 
     class Meta:
         model = Report
