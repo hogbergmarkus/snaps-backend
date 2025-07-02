@@ -7,3 +7,29 @@ __pycache__/
 node_modules/
 .github/
 cloudinary_python.txt
+
+# Virtual environment
+.venv/
+venv/
+
+# Database
+*.sqlite3
+db.sqlite3
+
+# VS Code settings
+.vscode/
+
+# Static files (collected)
+staticfiles/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

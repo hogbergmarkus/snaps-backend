@@ -60,10 +60,12 @@ REST_AUTH = {
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
+    'localhost',
+    '127.0.0.1',
 ]
 
 
@@ -119,6 +121,14 @@ if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
     ]
+
+# For local development
+if 'DEV' in os.environ:
+    CORS_ALLOWED_ORIGINS = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ]
+
 if 'CLIENT_ORIGIN_DEV' in os.environ:
     extracted_url = re.match(
         r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''),
@@ -186,9 +196,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://8000-hogbergmark-snapsbacken-o3kkxq6c3ir.ws-eu114.gitpod.io',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
     'https://snaps-2a8aec1abfbd.herokuapp.com'
-    ]
+]
 
 
 # Internationalization
